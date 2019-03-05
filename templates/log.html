@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BENDER LOG</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+      <div class="wrapper">
+      	<a href="/" class="button">VOLVER</a>
+		<div class="table">
+			<div class="row header">
+		      <div class="cell">
+		        Fecha - Hora
+		      </div>
+		      <div class="cell">
+		        Detalle
+		      </div>
+		    </div>
+		    {% for log in result %}
+		    <div class="row">
+		      <div class="cell" data-title="Fecha">
+		        {{ log.date }}
+		      </div>
+		      <div class="cell" data-title="Detalle">
+		        {{ log.text }}
+		      </div>
+		    </div>
+		    {% endfor %}
+		</div>
+	</div>
+</body>
+</html>

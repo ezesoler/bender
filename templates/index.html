@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bender</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<script type="text/javascript">
+		var layoutTemp;
+		window.onload = function(){
+			layoutTemp = document.querySelector("#temp b")
+			updateTemp();
+			setInterval(function(){ updateTemp(); }, 5000);
+		}
+
+		
+		function updateTemp(){
+			fetch("/api/v1/temp",
+			{
+			method: 'GET',
+			headers:{
+				'Content-Type': 'application/json'
+			}
+			})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(data) {
+				layoutTemp.innerHTML = data.result;
+			});
+		}
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="col">
+			<img class="bender" src="/static/img/bender_standup.png"  />
+		</div>
+		<div class="col">
+			<div>
+				<h1>BENDER</h1>
+				<p>Besa mi brillante trasero metálico</p>
+			</div>
+			<div>
+				<div id="temp">Temp: <b></b> C&deg;</div>
+				<a href="/log" class="button">LOG</a>
+				<a href="/tags" class="button">TAGS</a>
+				<a href="/minado" class="button">MINADO</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

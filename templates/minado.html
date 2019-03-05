@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BENDER LOG</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<script type="text/javascript">
+		var button;
+		var result;
+		var select;
+		window.onload = function(){
+			button = document.querySelector("#btn");
+			result = document.querySelector("#results");
+			select = document.querySelector("#orden");
+
+			button.addEventListener("click",simulate);
+		}
+
+		function simulate(){
+			var data = {
+					order: select.value
+			};
+			fetch("/api/v1/simulate",
+			{
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers:{
+				'Content-Type': 'application/json'
+			}
+			})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(data) {
+				let rows = "";
+				data.forEach(value => rows += generateRow(value) );
+				result.innerHTML = `
+					<div class="table">
+						<div class="row header blue">
+					      <div class="cell">
+					        Coub
+					      </div>
+					      <div class="cell">
+					        Views
+					      </div>
+					      <div class="cell">
+					        Likes
+					      </div>
+					      <div class="cell">
+					        Categoria
+					      </div>
+					      <div class="cell">
+					        Tags
+					      </div>
+					    </div>
+					    	${rows}
+					    </div>
+				`
+			});
+		}
+
+		function generateRow(v){
+			cat = "";
+			if(typeof v.categories != 'undefined'){
+				v.categories.forEach(value => cat += value.title+", " );
+			}
+			tags = "";
+			if(typeof v.tags != 'undefined'){
+				v.tags.forEach(value => tags += value.title+", " );
+			}
+			template = `
+				<div class="row">
+			      <div class="cell" data-title="Link">
+			        <a href="https://coub.com/view/${v.permalink}" target="_blank">${v.permalink}</a>
+			      </div>
+			      <div class="cell" data-title="Views">
+			        	${v.views}
+			      </div>
+			      <div class="cell" data-title="Likes">
+			        	${v.likes}
+			      </div>
+			      <div class="cell" data-title="Categoria">
+			        	${cat}
+			      </div>
+			      <div class="cell" data-title="Tags">
+			        	${tags}
+			      </div>
+			    </div>
+			`
+			return template;
+		}
+	</script>
+</head>
+<body>
+      <div class="wrapper">
+      	<a href="/" class="button">VOLVER</a>
+		<div class="table">
+			<div class="row header blue">
+		      <div class="cell">
+		        Dato
+		      </div>
+		      <div class="cell">
+		        Valor
+		      </div>
+		    </div>
+		    <div class="row">
+		      <div class="cell" data-title="Dato">
+		        Cantidad Minado
+		      </div>
+		      <div class="cell" data-title="Detalle">
+		        <b>{{ result.total }}</b>
+		      </div>
+		    </div>
+		    <div class="row">
+		      <div class="cell" data-title="Dato">
+		        Cantidad Usado
+		      </div>
+		      <div class="cell" data-title="Detalle">
+		        <b>{{ result.used }}</b>
+		      </div>
+		    </div>
+		    <div class="row">
+		      <div class="cell" data-title="Dato">
+		        Cantidad Disponible
+		      </div>
+		      <div class="cell" data-title="Detalle">
+		        <b>{{ result.notused }}</b>
+		      </div>
+		    </div>
+		</div>
+		<div>
+			<h2>Simulador</h2>
+			<select id="orden">
+				<option value="views">Por Views</option>
+				<option value="likes">Por Likes</option>
+			</select>
+			<button type="button" id="btn">SIMULAR</button>
+			<div id="results"></div>
+		</div>
+	</div>
+</body>
+</html>
