@@ -69,7 +69,7 @@ auth = true
 service mongodb restart
 ```
 
-### En caso de recuperar backup.
+### En caso de recuperar backup de la BD.
 
 Mover archivos a:
 
@@ -109,13 +109,13 @@ Habilitar Youtube Data API v3
 
 Una vez habilitada la API en el paso anterior, en la sección credenciales, se debe habilitar un "ID de cliente OAuth 2.0" y bajar el archivo  client_secrets.json que te genera y guardarlo en la raíz del proyecto junto con el archivo `oauth.py`
 
-Luego se debe ejecutar (en un entorno gráfico, porque se encesita el browser)
+Luego se debe ejecutar (en un entorno gráfico, porque se necesita el browser)
 
 ```sh
 python oauth.py
 ```
 
-Este comando abrirá el navegador donde deberás seleccionar (estando previamente logueado con la cuenta de Google que utilizarás) el canal de YouTube al que autorizas la API.
+Este comando abrirá el navegador donde deberás seleccionar (estando previamente logueado con la cuenta de Google que utilizarás) el canal de YouTube al que autorizás la API.
 
 Si todo sale bien, de deberá crear en la raíz del proyecto un archivo `api-oauth2.json`
 
@@ -135,7 +135,7 @@ Abrir el archivo `globals.py` y cambiar los siguientes valores.
 45 YOUTUBE_API_KEY = "<google_api_key>" #API Key de Google Developer Console en la seccion credenciales (se usa para recuperar tags y estadíticas)
 ```
 
-En el caso de usar un bot de telegram para informar estadísticas y subidas de video:
+En el caso de usar un bot de Telegram para informar estadísticas y subidas de video:
 
 ```
 60 BOT_TELEGRAM_TOKEN = "<bot_telegram_token>" #Token del bot creado en telegram.
@@ -213,7 +213,7 @@ exit 0
 ```
 
 ```sh
-chmod +x /etc/init.d/nombre_servicio
+chmod +x /etc/init.d/flask
 ```
 
 #### Autoarranque
