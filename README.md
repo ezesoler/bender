@@ -1,3 +1,4 @@
+<img src="https://github.com/ezesoler/bender/blob/master/static/img/bender_standup.png" alt="drawing" width="150"/>
 
 # Bender
 
